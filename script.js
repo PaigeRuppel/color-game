@@ -12,7 +12,7 @@ var difficultyLevels = document.querySelectorAll(".difficulty");
 
 var colorToGuess = pickColor();
 
-colorDisplay.textContent = colorToGuess;
+setTextContent(colorDisplay, colorToGuess);
 
 for (var i = 0; i < difficultyLevels.length; i++) {
 	var difficulty = difficultyLevels[i];
@@ -28,46 +28,48 @@ for (var i = 0; i < difficultyLevels.length; i++) {
 
 function removeSelectedClass() {
 	for (var i = 0; i < difficultyLevels.length; i++) {
-		difficultyLevels[i].classList.remove("selected");
+		removeClass(difficultyLevels[i], "selected");
 	}
 }
 
+
 reset.addEventListener("click", function() {
 	resetForm(level);
-	header.style.backgroundColor = "steelblue";
+	setBackground(header, "steelblue");
 });
+
 
 function resetForm(number) {
 	colors = generateRandomColors(number);
 	colorToGuess = pickColor();
-	colorDisplay.textContent = colorToGuess;	
+	setTextContent(colorDisplay, colorToGuess);	
 	for (var i = 0; i < squares.length; i++) {
 		var square = squares[i];
 		if (colors[i]) {
-			square.style.backgroundColor = colors[i];
-			square.classList.remove("hidden");
+			setBackground(square, colors[i]);
+			removeClass(square, "hidden");
 		} else {
 			square.classList.add("hidden");
 		}
 	}
-	reset.textContent = "New Colors";
-	message.textContent = "";
+	setTextContent(reset, "New Colors");
+	setTextContent(message, "");
 }
+
 
 for (var i = 0; i < squares.length; i++) {
 	var square = squares[i];
 	square.style.backgroundColor = colors[i];
-
 	square.addEventListener("click", function() {
 		var clickedColor = this.style.backgroundColor;
 		if (clickedColor === colorToGuess) {
-			message.textContent = "Correct!";
+			setTextContent(message, "Correct");
 			changeColors(clickedColor);
-			header.style.backgroundColor = clickedColor;
-			reset.textContent = "Play Again?";
+			setBackground(header, clickedColor);
+			setTextContent(reset, "Play Again?");
 		} else {
-		  this.style.backgroundColor = "#232323";
-		  message.textContent = "Please try again!";
+		  setBackground(this, "#232323");
+		  setTextContent(message, "Please try again!");
 		}
 	});
 }
@@ -75,8 +77,19 @@ for (var i = 0; i < squares.length; i++) {
 function changeColors(color) {
 	for (var i = 0; i < squares.length; i++) {
 		var square = squares[i];
-		square.style.backgroundColor = color;
+		setBackground(square, color);
 	}
+}
+
+function setTextContent(element, text) {
+	element.textContent = text;
+}
+
+function removeClass(element, classToRemove) {
+	element.classList.remove(classToRemove);
+}
+var setBackground = function(element, color) {
+	element.style.backgroundColor = color;
 }
 
 function pickColor() {
