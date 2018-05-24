@@ -14,15 +14,21 @@ body {
 	color: blue;
 	background: white;
 	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 10px;
+}
+
+#message {
+	width: 120px;
 	text-align: center;
 }
 
 button {
-	border-radius: 5px;
 	background: white;
 	color: rgb(108, 157, 192);
 	border: none;
-	padding: 7px;
 }
 
 .container {

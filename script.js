@@ -8,37 +8,32 @@ var colorDisplay = document.querySelector("#colorDisplay");
 var message = document.querySelector("#message");
 
 
-var easyButton = document.querySelector("#easyBtn");
-var hardButton = document.querySelector("#hardBtn");
-
-var isHardMode = true;
+var difficultyLevels = document.querySelectorAll(".difficulty");
+var level = 6; //default starting level
 
 var colorToGuess = pickColor();
 
-
-
-easyButton.addEventListener("click", function() {
-	easyButton.classList.toggle("selected");
-	hardButton.classList.toggle("selected");
-	isHardMode = false;
-	resetForm(3);
-});
-
-hardButton.addEventListener("click", function() {
-	hardButton.classList.toggle("selected");
-	easyButton.classList.toggle("selected");
-	isHardMode = true;
-	resetForm(6);
-});
-
 colorDisplay.textContent = colorToGuess;
 
-reset.addEventListener("click", function() {
-	if (isHardMode) {
-	resetForm(6);
-	} else {
-	resetForm(3);
+for (var i = 0; i < difficultyLevels.length; i++) {
+	var level = difficultyLevels[i];
+
+	level.addEventListener("click", function() {
+		removeSelectedClass();
+		this.classList.add("selected");
+		level = this.value;
+		resetForm(level);
+	});
+}
+
+function removeSelectedClass() {
+	for (var i = 0; i < difficultyLevels.length; i++) {
+		difficultyLevels[i].classList.remove("selected");
 	}
+}
+
+reset.addEventListener("click", function() {
+	resetForm(level);
 });
 
 function resetForm(number) {
@@ -48,19 +43,15 @@ function resetForm(number) {
 
 	for (var i = 0; i < squares.length; i++) {
 	var square = squares[i];
-		if (i < number) {
+	square.classList.add("hidden");
+		if (colors[i]) {
 			square.style.backgroundColor = colors[i];
 			square.classList.remove("hidden");
-		} else {
-			square.classList.add("hidden");
-		}
+		} 
 	}
-
 	header.style.backgroundColor = "#232323";
 	reset.textContent = "New Colors";
 }
-
-
 
 for (var i = 0; i < squares.length; i++) {
 	var square = squares[i];
