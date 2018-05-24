@@ -1,4 +1,5 @@
-var colors = generateRandomColors(6);
+var level = 6; //default starting level
+var colors = generateRandomColors(level);
 
 var header = document.querySelector(".header");
 
@@ -7,21 +8,20 @@ var squares = document.querySelectorAll(".square");
 var colorDisplay = document.querySelector("#colorDisplay");
 var message = document.querySelector("#message");
 
-
 var difficultyLevels = document.querySelectorAll(".difficulty");
-var level = 6; //default starting level
 
 var colorToGuess = pickColor();
 
 colorDisplay.textContent = colorToGuess;
 
 for (var i = 0; i < difficultyLevels.length; i++) {
-	var level = difficultyLevels[i];
+	var difficulty = difficultyLevels[i];
 
-	level.addEventListener("click", function() {
+	difficulty.addEventListener("click", function() {
 		removeSelectedClass();
 		this.classList.add("selected");
 		level = this.value;
+		console.log(level);
 		resetForm(level);
 	});
 }
@@ -34,23 +34,24 @@ function removeSelectedClass() {
 
 reset.addEventListener("click", function() {
 	resetForm(level);
+	header.style.backgroundColor = "steelblue";
 });
 
 function resetForm(number) {
 	colors = generateRandomColors(number);
 	colorToGuess = pickColor();
 	colorDisplay.textContent = colorToGuess;	
-
 	for (var i = 0; i < squares.length; i++) {
-	var square = squares[i];
-	square.classList.add("hidden");
+		var square = squares[i];
 		if (colors[i]) {
 			square.style.backgroundColor = colors[i];
 			square.classList.remove("hidden");
-		} 
+		} else {
+			square.classList.add("hidden");
+		}
 	}
-	header.style.backgroundColor = "#232323";
 	reset.textContent = "New Colors";
+	message.textContent = "";
 }
 
 for (var i = 0; i < squares.length; i++) {
@@ -96,5 +97,5 @@ function generateRandomRgbValue() {
 }
 
 function generateRandomSingleValue() {
-	return Math.floor((Math.random() * 266));
+	return Math.floor((Math.random() * 256));
 }
