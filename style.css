@@ -6,6 +6,10 @@ h1 {
 	color: white;
 }
 
+#message {
+	color: white;
+}
+
 .container {
 	margin: 0 auto;
 	width: 400px;
